@@ -4,6 +4,8 @@
 #include <iostream>
 #include "VOI.h"
 #include <algorithm>
+
+
 int main()
 {
     VOI v(4, 4);
@@ -38,20 +40,7 @@ int main()
            
         }
     }
-    /*
-    v.value_mat[1][1] = -.5;
-
-    v.value_mat[1][3] = -5.5;
-
-    v.value_mat[2][2] = -2;
-    v.value_mat[2][3] = -4;
    
-
-
-    v.value_mat[3][1] = -.5;
-    v.value_mat[3][2] = -2;
-    v.value_mat[3][3] = -2.5;
-    */
     v.value_mat[1][0] = -.5;
     v.value_mat[1][1] = -.5;
     v.value_mat[1][2] = -5.5;
@@ -106,7 +95,8 @@ int main()
 
 
     //q1b)
-    for (int qaly = 0; qaly < 100; qaly++) {
+    for (double qaly = 0; qaly < 2; qaly = qaly + 0.01) {
+        //cout << qaly;
         v.value_mat[0][0] = -0*qaly;
         v.value_mat[0][1] = -2*qaly;
         v.value_mat[0][2] = -5*qaly;
@@ -164,7 +154,9 @@ int main()
 
         double evpi = evc - evuc;
 
-        cout << endl;
+        if (evc - .5 > evuc) {
+            cout << qaly << endl;
+       }
 
 
 
@@ -172,6 +164,58 @@ int main()
 
 
     }
+
+
+
+
+
+    //Q3
+    //EVPPI
+
+    v.value_mat[0][0] = -0;
+    v.value_mat[0][1] = -2;
+    v.value_mat[0][2] = -5;
+    v.value_mat[0][3] = -7;
+
+
+
+    v.value_mat[1][0] = -.5;
+    v.value_mat[1][1] = -.5;
+    v.value_mat[1][2] = -5.5;
+    v.value_mat[1][3] = -5.5;
+
+    v.value_mat[2][0] = -2;
+    v.value_mat[2][1] = -4;
+    v.value_mat[2][2] = -2;
+    v.value_mat[2][3] = -4;
+
+
+    v.value_mat[3][0] = -2.5;
+    v.value_mat[3][1] = -2.5;
+    v.value_mat[3][2] = -2.5;
+    v.value_mat[3][3] = -2.5;
+
+
+
+    //Test 3
+   // v.EV_action_state[2] = 
+
+
+
+
+
+    for (int i = 0; i < v.EV_action_state.size(); i++) {
+        for (int j = 0; j < v.prob_state.size(); j++) {
+            v.EV_action_state[i] += v.value_mat[j][i] * v.prob_state[j];
+        }
+    }
+    
+   
+    double EVPPI = v.EV_action_state[2] - 0.3 - evuc;
+
+    cout << endl;
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
